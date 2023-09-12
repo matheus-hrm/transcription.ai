@@ -1,7 +1,10 @@
-import { Github, FileVideo, Upload } from 'lucide-react'
+import { Github, FileVideo, Upload, Wand2 } from 'lucide-react'
 import { Button } from './components/ui/button';
 import { Separator } from './components/ui/separator';
 import { Textarea } from './components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
+import { Slider } from './components/ui/slider';
+
 
 
 export function App() {
@@ -60,7 +63,7 @@ export function App() {
               <label htmlFor='transcriptionPrompt'>Prompt de transcrição</label>
               <Textarea 
               id="transcriptionPrompt"
-              className='h-20 p-5 leading-relaxed resize-none'
+              className='h-20 p-3 leading-relaxed resize-none'
               placeholder='Insira palavras chave mencionadas no video separadas por vírgula'
               />
             </div>
@@ -72,10 +75,57 @@ export function App() {
 
           <Separator />
 
-          <form className='space-y-2'>
-            <label>
-              Modelo
-            </label>
+          <form className='space-y-4'>
+            <div className="space-y-2">
+            <label >Prompt</label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione um prompt"/>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Resumo do vídeo">Resumo geral do vídeo</SelectItem>
+                  <SelectItem value="Título">Gere um título impactante</SelectItem>
+                  <SelectItem value="Perguntas">Crie perguntas que inspirem comentários</SelectItem>
+                  <SelectItem value="Tópicos">Divida o vídeo por tópicos</SelectItem>
+                </SelectContent>
+              </Select>
+              
+              <div className="space-y-2 pb-3" >
+                <label >Modelo</label>
+                <Select disabled defaultValue='gpt3.5'>
+                  <SelectTrigger>
+                    <SelectValue/>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="gpt3.5">GPT 3.5</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <Separator />
+
+              <div className='space-y-5'>
+                <label>Temperatura</label>
+                
+                <Slider 
+                min={0}
+                max={1}
+                step={0.1}
+                defaultValue={[0.5]}
+                />
+
+                </div>
+                <span className='text-muted-foreground leading-relaxed text-xs'>
+                  Valores mais altos tendem a deixar o resultado mais criativo e com possíveis erros
+                </span>
+            </div>
+
+            <Separator />
+
+            <Button type="submit" className='w-full'>
+              Executar
+              <Wand2 className="w-4 h-4 ml-2"/>
+            </Button>
           </form>
         </aside>
       </main>
