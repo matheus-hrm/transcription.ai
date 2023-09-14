@@ -1,9 +1,10 @@
-import { Github, FileVideo, Upload, Wand2 } from 'lucide-react'
+import { Github, FileVideo, Upload, Wand2, Video } from 'lucide-react'
 import { Button } from './components/ui/button';
 import { Separator } from './components/ui/separator';
 import { Textarea } from './components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
 import { Slider } from './components/ui/slider';
+import { VideoInputForm } from './components/video-input-form';
 
 export function App() {
   return (
@@ -43,31 +44,7 @@ export function App() {
             Lembre-se: você pode utilizar a varíavel <code className="text-orange-400">{'{transcription}'}</code> no seu prompt para adicionar o conteudo da transcrição do vídeo selecionado</p>
         </div>
         <aside className="w-80 space-y-6 ">
-          <form className=" space-y-6">
-            <label 
-            htmlFor="video"
-            className="border border-input rounded-md flex flex-col gap-2 items-center justify-center cursor-pointer aspect-video hover:bg-orange-400/30 transition-colors text-sm text-muted-foreground"
-            >
-              <FileVideo className="w4 h-4"/>
-              Upload
-            </label>
-            <input type="file" id="Video" accept="video/mp4" className="sr-only"/>
-            
-            <Separator />
-
-            <div className="space-y-3">
-              <label htmlFor='transcriptionPrompt'>Prompt de transcrição</label>
-              <Textarea 
-              id="transcriptionPrompt"
-              className='h-20 p-3 leading-relaxed resize-none'
-              placeholder='Insira palavras chave mencionadas no video separadas por vírgula'
-              />
-            </div>
-            <Button type="submit" className="w-full" >
-              Carregar Vídeo
-              <Upload className="w-4 h-4 ml-2"/>
-            </Button>
-          </form>
+          <VideoInputForm />
 
           <Separator />
 
