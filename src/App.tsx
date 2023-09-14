@@ -5,8 +5,6 @@ import { Textarea } from './components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
 import { Slider } from './components/ui/slider';
 
-
-
 export function App() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -26,8 +24,6 @@ export function App() {
           </Button>
         </div>
       </div>
-
-
       <main className="flex-1 p-6 flex gap-6">
         <div className="flex flex-col flex-1 gap-4">
           <div className="grid grid-rows-2 gap-4 flex-1">
