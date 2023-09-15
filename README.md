@@ -52,13 +52,13 @@ Inicie a aplicação:
 
 ```bash
 
-pnpm start
+pnpm run dev
 ```
 
 Agora a aplicação deve estar rodando localmente em http://localhost:3000.
 
 ### Uso
-
+  Não se esqueça de clonar o back end e rodar **pnpm run dev** para iniciar o servidor.
   Abra a aplicação no seu navegador.
   Insira o prompt desejado na caixa de texto.
   Carregue um vídeo clicando no botão "Upload".
