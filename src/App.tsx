@@ -5,8 +5,35 @@ import { Textarea } from './components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
 import { Slider } from './components/ui/slider';
 import { VideoInputForm } from './components/video-input-form';
+import { PromptSelect } from './components/prompt-select';
+import { useState } from 'react';
+import { useCompletion } from 'ai/react'
 
 export function App() {
+
+  const [temperature, setTemperature] = useState(0.5)
+
+  const [videoId, setVideoId] = useState<string | null>(null)
+
+
+  const { 
+    input,
+    setInput,
+    handleInputChange,
+    handleSubmit,
+    completion,
+    isLoading,
+  } = useCompletion({
+    api: 'http://localhost:3000/ai/complete',
+    body: {
+      videoId,
+      temperature,
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className ="px-6 py-3 flex items-center justify-between border-b ">
@@ -31,12 +58,14 @@ export function App() {
             <Textarea 
               className='resize-none p-5 leading-relaxed'
               placeholder='Insira o prompt para a IA..'
+              value={input}
+              onChange={handleInputChange}
             />
             <Textarea
-              className='resize-none p-5 leading-relaxed' 
+              className='resize-none p-5 leading-relaxed ' 
               placeholder='Resultado gerado pela IA..' 
-              readOnly
               disabled
+              value={completion}
             />
 
           </div>
@@ -44,24 +73,15 @@ export function App() {
             Lembre-se: você pode utilizar a varíavel <code className="text-orange-400">{'{transcription}'}</code> no seu prompt para adicionar o conteudo da transcrição do vídeo selecionado</p>
         </div>
         <aside className="w-80 space-y-6 ">
-          <VideoInputForm />
+          <VideoInputForm onVideoUploaded={setVideoId} />
 
           <Separator />
 
-          <form className='space-y-4'>
+          <form onSubmit={handleSubmit}className='space-y-4'>
             <div className="space-y-2">
+            
             <label >Prompt</label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione um prompt"/>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Resumo do vídeo">Resumo geral do vídeo</SelectItem>
-                  <SelectItem value="Título">Gere um título impactante</SelectItem>
-                  <SelectItem value="Perguntas">Crie perguntas que inspirem comentários</SelectItem>
-                  <SelectItem value="Tópicos">Divida o vídeo por tópicos</SelectItem>
-                </SelectContent>
-              </Select>
+              <PromptSelect onPromptSelected={setInput} />
               
               <div className="space-y-2 pb-3" >
                 <label >Modelo</label>
@@ -84,7 +104,8 @@ export function App() {
                 min={0}
                 max={1}
                 step={0.1}
-                defaultValue={[0.5]}
+                value={[temperature]}
+                onValueChange={value => setTemperature(value[0])}
                 />
 
                 </div>
@@ -95,7 +116,7 @@ export function App() {
 
             <Separator />
 
-            <Button type="submit" className='w-full'>
+            <Button disabled={isLoading} type="submit" className='w-full'>
               Executar
               <Wand2 className="w-4 h-4 ml-2"/>
             </Button>
